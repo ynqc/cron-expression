@@ -7,10 +7,10 @@
                     <link rel="stylesheet" href="../index.css" />
                 <script defer src="cron-expression.js"></script></head>
                 <body>
-                    <cron-expression value="* * * * * *"></cron-expression>
+                    <cron-expression value="1-2 * * * * *"></cron-expression>
                 </body>
                 <script type="module">
-                    import Cron from './cron-expression.js';
-                    const str = Cron.next("* * * * * *");
+                    import './cron-expression.js';
+                    console.log(Cron.default.prototype)
                 </script>
                 </html>

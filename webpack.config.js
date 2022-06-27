@@ -1,24 +1,29 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack')
+const path = require("path");
 
 module.exports = {
     mode: 'development',
     entry: {
-        app: './bundle.js'
+        app: './index.js'
     },
     output: {
         filename: 'cron-expression.js',
-        path: __dirname + '/dist',
+        path: path.resolve(__dirname, "dist"),
         library: "Cron",
-        libraryTarget: "umd",
-        clean: true
+        libraryTarget: "umd"
     },
     module: {
         rules: [
             {
-                test: /\.m?js$/,
-                exclude: /(node_modules )/,
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ['@babel/plugin-transform-runtime']
+                    }
                 }
             }
         ]
@@ -38,6 +43,10 @@ module.exports = {
                 <body>
                     <cron-expression value="1-2 * * * * *"></cron-expression>
                 </body>
+                <script type="module">
+                    import './cron-expression.js';
+                    console.log(Cron.default.prototype)
+                </script>
                 </html>`                
         })
     ]

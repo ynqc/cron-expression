@@ -295,7 +295,7 @@ if (!customElements.get("cron-expression")) {
     customElements.define("cron-expression", CronExpression)
 }
 
-export default {
+export default class {
     next(cron) {
         const format = 'yyyy-MM-dd hh:mm:ss'
         const options = {
@@ -309,7 +309,7 @@ export default {
             const message = 'Please set correct expression';
             return message;
         }
-    },
+    }
     format(cron) {
         try {
             return cronstrue.toString(cron);
