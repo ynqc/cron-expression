@@ -15,7 +15,7 @@ module.exports = {
         filename: 'cron-expression.js',
         path: path.resolve(__dirname, "dist"),
         library: "Cron",
-        libraryTarget: "var"
+        libraryTarget: "umd"
     },
     module: {
         rules: [

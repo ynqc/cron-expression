@@ -6,8 +6,17 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-var Cron;
-/******/ (() => { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["Cron"] = factory();
+	else
+		root["Cron"] = factory();
+})(self, () => {
+return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./bundle.js":
@@ -388,7 +397,8 @@ eval("/* (ignored) */\n\n//# sourceURL=webpack://Cron/fs_(ignored)?");
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __webpack_require__("./bundle.js");
-/******/ 	Cron = __webpack_exports__;
 /******/ 	
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
+});

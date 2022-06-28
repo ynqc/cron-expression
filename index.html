@@ -10,6 +10,7 @@
                     <cron-expression value="* * * * *"></cron-expression>
                 </body>
                 <script type="module">
+                    // import './cron-expression.js'
                     const cron = new Cron();
                     console.log(cron.format("* * * * *"))
                 </script>
