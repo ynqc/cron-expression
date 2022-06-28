@@ -54,12 +54,18 @@ export default class CronYear extends HTMLElement {
                 radio.checked = this.value.includes(radio.value);
             }
         });
-        if(this.value.includes("-") && this.value.includes("/")) {
+        if(this.value.includes("/")) {
             const str = this.value.split("/");
             const interval = str[1];
-            const str_before = str[0].trim().split("-");
-            const min = str_before[0];
-            const max = str_before[1];
+            let min, max;
+            if (str[0] === "*") {
+                min = 1970;
+                max = 1970;
+            } else {
+                const str_before = str[0].trim().split("-");
+                min = str_before[0];
+                max = str_before[1];
+            }
             this.min = min;
             this.max = max;
             this.minCycleEl.value = min;
@@ -125,7 +131,11 @@ export default class CronYear extends HTMLElement {
                     this.min = this.minCycleEl.value;
                     this.max = this.maxCycleEl.value;
                     const interval = this.intervalCycleEl.value;
-                    this.value = this.min + "-" + this.max + "/" + interval;
+                    if (this.min === "1970" && this.max === "1970") {
+                        this.value = "*/" + interval;
+                    } else {
+                        this.value = this.min + "-" + this.max + "/" + interval;
+                    }
                     this.exceptCycleEls.forEach(item => {
                         item.setAttribute("disabled", true);
                     })

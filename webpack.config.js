@@ -1,17 +1,21 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack')
 const path = require("path");
 
 module.exports = {
-    mode: 'development',
+    mode: "development",
+    // devServer: {
+    //     contentBase: path.join(__dirname, 'dist'),
+    //     compress: true,
+    //     port: 8080
+    // },
     entry: {
-        app: './index.js'
+        app: './bundle.js'
     },
     output: {
         filename: 'cron-expression.js',
         path: path.resolve(__dirname, "dist"),
         library: "Cron",
-        libraryTarget: "umd"
+        libraryTarget: "var"
     },
     module: {
         rules: [
@@ -22,32 +26,28 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: ['@babel/preset-env'],
-                        plugins: ['@babel/plugin-transform-runtime']
+                        plugins: [
+                            '@babel/plugin-proposal-class-properties',
+                            '@babel/plugin-syntax-class-properties',
+                            '@babel/plugin-proposal-private-methods'
+                        ]
                     }
                 }
-            }
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "sass-loader",
+                ],
+            },
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            filename: './index.html',
-            templateContent:
-                `<!DOCTYPE html>
-                    <html lang="en">
-                <head>
-                    <meta charset="UTF-8" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <title>Sample Page</title>
-                    <link rel="stylesheet" href="../index.css" />
-                </head>
-                <body>
-                    <cron-expression value="1-2 * * * * *"></cron-expression>
-                </body>
-                <script type="module">
-                    import './cron-expression.js';
-                    console.log(Cron.default.prototype)
-                </script>
-                </html>`                
+            filename: 'index.html',
+            template: 'index.html'        
         })
     ]
 };

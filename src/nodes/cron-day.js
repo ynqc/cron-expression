@@ -56,12 +56,18 @@ export default class CronDay extends HTMLElement {
                 radio.checked = this.value.toUpperCase().includes(radio.value);
             }
         });
-        if(this.value.includes("-") && this.value.includes("/")) {
+        if(this.value.includes("/")) {
             const str = this.value.split("/");
             const interval = str[1];
-            const str_before = str[0].trim().split("-");
-            const min = str_before[0];
-            const max = str_before[1];
+            let min, max;
+            if (str[0] === "*") {
+                min = 0;
+                max = 0;
+            } else {
+                const str_before = str[0].trim().split("-");
+                min = str_before[0];
+                max = str_before[1];
+            }
             this.minCycleEl.value = min;
             this.maxCycleEl.value = max;
             this.intervalCycleEl.value = interval;
@@ -128,7 +134,11 @@ export default class CronDay extends HTMLElement {
                     const min = this.minCycleEl.value;
                     const max = this.maxCycleEl.value;
                     const interval = this.intervalCycleEl.value;
-                    this.value = min + "-" + max + "/" + interval;
+                    if (min === "0" && max === "0") {
+                        this.value = "*/" + interval;
+                    } else {
+                        this.value = min + "-" + max + "/" + interval;
+                    }
                     this.exceptCycleEls.forEach(item => {
                         item.setAttribute("disabled", true);
                     })
